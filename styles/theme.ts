@@ -22,8 +22,8 @@ export const theme = extendTheme({
     },
   },
   fonts: {
-    heading: 'Pacifico',
-    body: 'Pacifico'
+    heading: 'VT323',
+    body: 'VT323'
   },
   styles: {
     global: {
