@@ -1,17 +1,13 @@
 import { GetServerSideProps } from "next"
-import { useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { withSSRAuth } from "../../utils/withSSRAuth"
+import { Can } from "../components/Can"
 import { AuthContext } from "../contexts/AuthContext"
-import { useCan } from "../hooks/useCan"
 import { setupAPIClient } from "../services/api"
 import { api } from "../services/apiClient"
 
 export default function Dashboard() {
   const { user, isAuthenticated } = useContext(AuthContext)
-
-  const userCanSeeMetrics = useCan({
-    roles: ['administrator', 'editor']
-  });
 
   useEffect(() => {
     api.get('/me').then(response => console.log(response))
@@ -19,9 +15,11 @@ export default function Dashboard() {
 
   return (
     <>
-      <h1>Dashboard: {user?.email}</h1>
+     <h1>Dashboard: {user?.email}</h1>
 
-      { userCanSeeMetrics && <div>Métricas</div>}
+     <Can permissions={['metrics.list']}>
+        <div>Métricas</div>
+     </Can>
     </>
   )
 }
